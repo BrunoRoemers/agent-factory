@@ -1,0 +1,25 @@
+#cloud-config
+
+users:
+  - name: ${unix_username}
+    shell: /bin/bash
+    lock_passwd: true
+    ssh_authorized_keys:
+      - ${ssh_public_key}
+
+runcmd:
+  - apt-get update -y
+  - DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
+  - apt-get install -y build-essential curl
+  - curl -fsSL https://tailscale.com/install.sh | sh
+  - tailscale up --authkey=${tailscale_auth_key}
+  # TODO see if we can install openclaw (plugins) without homebrew
+  # - su -l ${unix_username} -c 'NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
+  # - su -l ${unix_username} -c 'echo "eval \"$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)\"" >> ~/.bashrc'
+  # - su -l ${unix_username} -c '/home/linuxbrew/.linuxbrew/bin/brew install gcc'
+  - su -l ${unix_username} -c 'curl -fsSL https://openclaw.ai/install.sh | bash'
+
+power_state:
+  mode: reboot
+  timeout: 30
+  condition: true

@@ -18,6 +18,12 @@ resource "hcloud_server" "openclaw" {
   ssh_keys     = [hcloud_ssh_key.dev_machine.id]
   firewall_ids = [hcloud_firewall.openclaw.id]
 
+  user_data = templatefile("${path.module}/cloud-init.yaml.tftpl", {
+    unix_username      = var.unix_username
+    ssh_public_key     = var.ssh_public_key
+    tailscale_auth_key = var.tailscale_auth_key
+  })
+
   public_net {
     ipv4_enabled = true
     ipv6_enabled = false

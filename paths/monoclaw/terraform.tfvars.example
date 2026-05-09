@@ -1,5 +1,14 @@
-# Hetzner API Key: get it from Hetzner Console > Project > Security > API Tokens
-hcloud_token   = "YOUR_TOKEN_HERE"
+# Hetzner API Key
+# Get it from Hetzner Console > Project > Security > API Tokens
+hcloud_token = "YOUR_TOKEN_HERE"
 
-# Public SSH Key of dev machine: cat ~/.ssh/id_ed25519.pub
-ssh_public_key = "ssh-ed25519 AAAA... you@machine"
+# Public SSH Key of your dev machine:
+# Get it from your computer (e.g. `cat ~/.ssh/id_ed25519.pub`)
+ssh_public_key = "YOUR_PUBLIC_KEY_HERE"
+
+# Single-use Tailscale auth key for the server to join your tailnet.
+# Get it from Tailscale Console > Settings > Personal Settings > Keys > Auth Keys
+tailscale_auth_key = "YOUR_AUTH_KEY_HERE"
+
+# Unix username for the non-root user
+unix_username = "app"
