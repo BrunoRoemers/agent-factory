@@ -33,3 +33,12 @@ resource "hcloud_server" "openclaw" {
 output "server_ip" {
   value = hcloud_server.openclaw.ipv4_address
 }
+
+output "next_steps" {
+  value = <<-EOT
+
+    Cloud-init is still running on the server. Once Tailscale is up, check progress:
+      ssh root@<tailscale-ip> 'tail -f /var/log/cloud-init-output.log'
+      ssh root@<tailscale-ip> 'cloud-init status --long'
+  EOT
+}

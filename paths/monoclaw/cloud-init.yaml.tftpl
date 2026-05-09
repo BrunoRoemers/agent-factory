@@ -7,19 +7,38 @@ users:
     ssh_authorized_keys:
       - ${ssh_public_key}
 
+ssh_pwauth: false
+
+packages:
+  - curl
+  - unzip
+  - build-essential
+package_update: true
+package_upgrade: true
+
 runcmd:
-  - apt-get update -y
-  - DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
-  - apt-get install -y build-essential curl
+  # Setup Tailscale
   - curl -fsSL https://tailscale.com/install.sh | sh
   - tailscale up --authkey=${tailscale_auth_key}
+
+  # Setup Node
+  - su -l ${unix_username} -c 'curl -fsSL https://fnm.vercel.app/install | bash -s -- --install-dir ~/.fnm --skip-shell'
+  - su -l ${unix_username} -c 'echo "export PATH=\"\$HOME/.fnm:\$PATH\"" >> ~/.profile'
+  - su -l ${unix_username} -c 'echo "eval \"\$(\$HOME/.fnm/fnm env)\"" >> ~/.profile'
+  - su -l ${unix_username} -c 'fnm --version'
+  - su -l ${unix_username} -c 'fnm install 24'
+  - su -l ${unix_username} -c 'node --version'
+  - su -l ${unix_username} -c 'npm --version'
+
   # TODO see if we can install openclaw (plugins) without homebrew
   # - su -l ${unix_username} -c 'NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
-  # - su -l ${unix_username} -c 'echo "eval \"$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)\"" >> ~/.bashrc'
+  # - su -l ${unix_username} -c 'echo "eval \"$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)\"" >> ~/.profile'
   # - su -l ${unix_username} -c '/home/linuxbrew/.linuxbrew/bin/brew install gcc'
+
+  # Setup OpenClaw
   - su -l ${unix_username} -c 'curl -fsSL https://openclaw.ai/install.sh | bash'
 
 power_state:
   mode: reboot
-  timeout: 30
+  timeout: 5
   condition: true
