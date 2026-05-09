@@ -11,6 +11,7 @@ ssh_pwauth: false
 
 packages:
   - curl
+  - git
   - unzip
   - build-essential
 package_update: true
@@ -21,19 +22,18 @@ runcmd:
   - curl -fsSL https://tailscale.com/install.sh | sh
   - tailscale up --authkey=${tailscale_auth_key}
 
+  # Setup Homebrew
+  - curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh -o /tmp/brew-install.sh
+  - mkdir -p /home/linuxbrew/.linuxbrew
+  - chown -R ${unix_username} /home/linuxbrew
+  - su -l ${unix_username} -c 'NONINTERACTIVE=1 bash /tmp/brew-install.sh'
+  - su -l ${unix_username} -c 'echo "eval \"\$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)\"" >> ~/.profile'
+
   # Setup Node
-  - su -l ${unix_username} -c 'curl -fsSL https://fnm.vercel.app/install | bash -s -- --install-dir ~/.fnm --skip-shell'
-  - su -l ${unix_username} -c 'echo "export PATH=\"\$HOME/.fnm:\$PATH\"" >> ~/.profile'
-  - su -l ${unix_username} -c 'echo "eval \"\$(\$HOME/.fnm/fnm env)\"" >> ~/.profile'
-  - su -l ${unix_username} -c 'fnm --version'
-  - su -l ${unix_username} -c 'fnm install 24'
+  - su -l ${unix_username} -c 'brew install node@24'
+  - su -l ${unix_username} -c 'brew link node@24 --force --overwrite'
   - su -l ${unix_username} -c 'node --version'
   - su -l ${unix_username} -c 'npm --version'
-
-  # TODO see if we can install openclaw (plugins) without homebrew
-  # - su -l ${unix_username} -c 'NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
-  # - su -l ${unix_username} -c 'echo "eval \"$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)\"" >> ~/.profile'
-  # - su -l ${unix_username} -c '/home/linuxbrew/.linuxbrew/bin/brew install gcc'
 
   # Setup OpenClaw
   - su -l ${unix_username} -c 'curl -fsSL https://openclaw.ai/install.sh | bash'
