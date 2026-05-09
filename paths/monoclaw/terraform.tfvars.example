@@ -1,0 +1,5 @@
+# Hetzner API Key: get it from Hetzner Console > Project > Security > API Tokens
+hcloud_token   = "YOUR_TOKEN_HERE"
+
+# Public SSH Key of dev machine: cat ~/.ssh/id_ed25519.pub
+ssh_public_key = "ssh-ed25519 AAAA... you@machine"
