@@ -1,0 +1,14 @@
+{
+  "providers": {
+    "local": {
+      "baseUrl": "http://host.docker.internal:4321",
+      "api": "anthropic-messages",
+      "apiKey": "local",
+      "models": [
+        {
+          "id": "Granite-4.0-H-Tiny-4bit-DWQ"
+        }
+      ]
+    }
+  }
+}
