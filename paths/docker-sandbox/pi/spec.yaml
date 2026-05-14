@@ -1,19 +1,18 @@
 schemaVersion: "1"
-kind: mixin
+kind: agent
 name: pi
 displayName: Pi Agent
-description: Installs the Pi coding agent CLI and configures it to use local inference
+description: Pi coding agent configured to use local inference
+
+agent:
+  image: "agent-factory/pi:latest"
+  aiFilename: AGENTS.md
+  persistence: persistent
+  entrypoint:
+    run: [bash]
 
 network:
   allowedDomains:
-    # NPM
-    - registry.npmjs.org
-    - api.github.com
-
-    # GitHub
-    - github.com
-    - release-assets.githubusercontent.com
-
     # Claude
     - api.anthropic.com
     - claude.ai
@@ -39,9 +38,3 @@ credentials:
 environment:
   proxyManaged:
     - LOCAL_INFERENCE_API_KEY
-
-commands:
-  install:
-    - command: "npm install -g @earendil-works/pi-coding-agent"
-      user: "1000"
-      description: Install Pi
