@@ -1,8 +1,10 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 # Downloads Docker AI Sandboxes docs from docs.docker.com.
 # Starts from /ai/sandboxes.md, follows all relative links under /ai/sandboxes/, saves .md files locally.
 
 set -euo pipefail
+
+PATH="/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 
 BASE_URL="https://docs.docker.com"
 START_PATH="/ai/sandboxes.md"
@@ -11,13 +13,13 @@ DOCS_DIR="$(cd "$(dirname "$0")" && pwd)"
 declare -A visited
 
 download() {
-  local path="$1"
-  [[ "${visited[$path]+_}" ]] && return
-  visited[$path]=1
+  local doc_path="$1"
+  [[ "${visited[$doc_path]+_}" ]] && return
+  visited[$doc_path]=1
 
-  local url="${BASE_URL}${path}"
+  local url="${BASE_URL}${doc_path}"
   # Convert URL path to a local filename, preserving directory structure
-  local rel="${path#/}"           # strip leading slash
+  local rel="${doc_path#/}"       # strip leading slash
   local local_file="${DOCS_DIR}/${rel}"
   local local_dir
   local_dir="$(dirname "$local_file")"
