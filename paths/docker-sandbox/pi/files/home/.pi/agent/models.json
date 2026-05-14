@@ -7,6 +7,15 @@
       "models": [
         {
           "id": "Granite-4.0-H-Tiny-4bit-DWQ"
+        },
+        {
+          "id": "Mistral-7B-Instruct-v0.3-4bit"
+        },
+        {
+          "id": "gemma-3-12b-it-qat-4bit"
+        },
+        {
+          "id": "gemma-4-e4b-it-4bit"
         }
       ]
     }
