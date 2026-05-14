@@ -35,9 +35,13 @@ download() {
   # Extract links that point to /ai/sandboxes paths
   # Matches markdown links like [text](/ai/sandboxes/foo) or [text](/ai/sandboxes/foo.md)
   while IFS= read -r link; do
-    # Normalize: ensure it ends with .md
-    local normalized="$link"
-    [[ "$normalized" != *.md ]] && normalized="${normalized%.md}.md"
+    # Strip URL fragment (#anchor) — fragments are anchors within a page, not separate files
+    local normalized="${link%%#*}"
+    # Skip empty paths (e.g. fragment-only links)
+    [[ -z "$normalized" ]] && continue
+    # Strip trailing slash, then ensure it ends with .md
+    normalized="${normalized%/}"
+    [[ "$normalized" != *.md ]] && normalized="${normalized}.md"
     # Skip if already visited
     [[ "${visited[$normalized]+_}" ]] && continue
     download "$normalized"
