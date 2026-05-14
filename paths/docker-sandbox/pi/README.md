@@ -1,3 +1,4 @@
 # Pi Kit for Docker Sandbox
 
-Use: `sbx run shell --kit ./paths/docker-sandbox/pi`
+1. `sbx secret set -g local-inference`
+2. `sbx run shell --kit ./paths/docker-sandbox/pi`

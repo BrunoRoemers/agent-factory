@@ -3,7 +3,7 @@
     "local": {
       "baseUrl": "http://host.docker.internal:4321",
       "api": "anthropic-messages",
-      "apiKey": "local",
+      "apiKey": "LOCAL_INFERENCE_API_KEY",
       "models": [
         {
           "id": "Granite-4.0-H-Tiny-4bit-DWQ"

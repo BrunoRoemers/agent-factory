@@ -19,8 +19,26 @@ network:
     - claude.ai
     - platform.claude.com
 
-    # Local Models
+    # Local Inference
     - host.docker.internal:4321
+
+  serviceDomains:
+    host.docker.internal:4321: local-inference
+
+  serviceAuth:
+    local-inference:
+      headerName: x-api-key
+      valueFormat: "%s"
+
+credentials:
+  sources:
+    local-inference:
+      env:
+        - LOCAL_INFERENCE_API_KEY
+
+environment:
+  proxyManaged:
+    - LOCAL_INFERENCE_API_KEY
 
 commands:
   install:
