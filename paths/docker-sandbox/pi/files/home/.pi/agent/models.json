@@ -15,7 +15,13 @@
           "id": "gemma-3-12b-it-qat-4bit"
         },
         {
-          "id": "gemma-4-e4b-it-4bit"
+          "id": "gemma-4-e4b-it-4bit",
+          "contextWindow": 128000,
+          "reasoning": true,
+          "input": [
+            "text",
+            "image"
+          ]
         }
       ]
     }
