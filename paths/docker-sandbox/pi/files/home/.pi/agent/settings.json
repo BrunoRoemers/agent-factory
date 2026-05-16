@@ -1,4 +1,4 @@
 {
   "defaultProvider": "local",
-  "defaultModel": "Granite-4.0-H-Tiny-4bit-DWQ"
+  "defaultModel": "gemma-4-e4b-it-4bit"
 }

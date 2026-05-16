@@ -6,7 +6,6 @@ description: Pi coding agent configured to use local inference
 
 agent:
   image: "agent-factory/pi:latest"
-  aiFilename: AGENTS.md
   persistence: persistent
   entrypoint:
     run: [bash]
